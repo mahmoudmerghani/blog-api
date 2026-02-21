@@ -1,0 +1,64 @@
+import queries from "../db/queries.js";
+import bcrypt from "bcryptjs";
+import { sign } from "jsonwebtoken";
+import { matchedData } from "express-validator";
+
+async function login(req, res) {
+    const { username, password } = req.body;
+
+    try {
+        const user = await queries.getUserByUsername(username);
+
+        if (!user) {
+            return res.status(400).json({ error: "Invalid username" });
+        }
+
+        const isPasswordCorrect = await bcrypt.compare(password, user.password);
+
+        if (!isPasswordCorrect) {
+            return res.status(400).json({ error: "Invalid password" });
+        }
+
+        const token = sign(
+            {
+                sub: user.id,
+            },
+            process.env.JWT_SECRET,
+            {
+                algorithm: "HS256",
+                expiresIn: 60 * 60 * 24 * 7,
+            },
+        );
+
+        res.json({ token });
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ error: "Server error" });
+    }
+}
+
+async function signup(req, res) {
+    try {
+        const data = matchedData(req);
+        const hashedPassword = await bcrypt.hash(data.password, 10);
+        const user = await queries.createUser({
+            firstName: data.firstName,
+            lastName: data.lastName,
+            username: data.username,
+            password: hashedPassword,
+        });
+
+        res.status(201).json({
+            id: user.id,
+            username: user.username,
+        });
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ errors: ["Server error"] });
+    }
+}
+
+export default {
+    login,
+    signup,
+};
