@@ -7,14 +7,9 @@ async function getAllBlogsMetadata(req, res) {
 }
 
 async function getBlog(req, res) {
-    let { blogId } = req.params;
-    blogId = Number(blogId);
+    const { blogId } = req.params;
 
-    if (!Number.isInteger(blogId) || blogId < 0) {
-        return res.status(400).json({ error: "Invalid blogId" });
-    }
-
-    const blog = await queries.getBlog(Number(blogId));
+    const blog = await queries.getBlog(blogId);
 
     if (!blog) return res.status(404).json({ error: "Not found" });
 
@@ -22,10 +17,57 @@ async function getBlog(req, res) {
 }
 
 async function createBlog(req, res) {
-    
+    const { title, content } = req.body;
+    const creatorId = req.user.id;
+    const blog = await queries.createBlog({ title, content, creatorId });
+
+    res.status(201).json(blog);
+}
+
+async function updateBlog(req, res) {
+    const { title, content } = req.body;
+    const { blogId } = req.params;
+
+    try {
+        const blog = await queries.updateBlog(blogId, { title, content });
+        return res.json(blog);
+    } catch (e) {
+        return res.status(404).json({ error: "Not found" });
+    }
+}
+
+async function updateBlogPublishedState(req, res) {
+    const { blogId } = req.params;
+    const { isPublished } = req.body;
+
+    try {
+        const blog = await queries.updateBlogPublishedState(
+            blogId,
+            isPublished,
+        );
+
+        return res.json(blog);
+    } catch (e) {
+        return res.status(404).json({ error: "Not found" });
+    }
+}
+
+async function deleteBlog(req, res) {
+    const { blogId } = req.params;
+
+    try {
+        const blog = await queries.deleteBlog(blogId);
+        return res.json(blog);
+    } catch (e) {
+        return res.status(404).json({ error: "Not found" });
+    }
 }
 
 export default {
     getAllBlogsMetadata,
     getBlog,
+    createBlog,
+    updateBlog,
+    updateBlogPublishedState,
+    deleteBlog,
 };

@@ -1,8 +1,12 @@
 import express from "express";
 import blogsRouter from "./routes/blogsRouter.js";
+import authRouter from "./routes/authRouter.js";
 
 const app = express();
 
-app.use("/api/blogs", blogsRouter);
+app.use(express.json());
 
-app.listen("8080");
+app.use("/api/blogs", blogsRouter);
+app.use("/api/auth", authRouter);
+
+app.listen(8080);

@@ -3,8 +3,8 @@ import authController from "../controllers/authController.js";
 import {
     validateUser,
     validateLogin,
-    handleValidationErrors,
 } from "../middleware/userValidations.js";
+import { handleValidationErrors } from "../middleware/errorHandlingMiddleware.js";
 
 const authRouter = express.Router();
 

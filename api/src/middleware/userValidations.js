@@ -1,18 +1,14 @@
-import { body, validationResult } from "express-validator";
+import { body } from "express-validator";
+import queries from "../db/queries.js";
+
 
 export const validateUser = [
-    body("firstName")
+    body("fullName")
         .trim()
         .notEmpty()
-        .withMessage("First name cannot be empty")
+        .withMessage("Full name cannot be empty")
         .isString()
-        .withMessage("First name must be a string"),
-    body("lastName")
-        .trim()
-        .notEmpty()
-        .withMessage("Last name cannot be empty")
-        .isString()
-        .withMessage("Last name must be a string"),
+        .withMessage("Full name must be a string"),
     body("username")
         .trim()
         .notEmpty()
@@ -59,12 +55,3 @@ export const validateLogin = [
         .withMessage("Password must be a string"),
 ];
 
-export function handleValidationErrors(req, res, next) {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    }
-
-    next();
-}
