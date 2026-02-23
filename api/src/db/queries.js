@@ -6,8 +6,8 @@ async function getAllBlogs() {
     return blogs;
 }
 
-async function getAllBlogsMetadata() {
-    const blogs = await prisma.blog.findMany({
+async function getAllBlogsMetadata({ includeUnpublished = false }) {
+    const query = {
         select: {
             id: true,
             title: true,
@@ -16,10 +16,15 @@ async function getAllBlogsMetadata() {
             createdAt: true,
             editedAt: true,
         },
-        where: {
+    };
+
+    if (!includeUnpublished) {
+        query.where = {
             isPublished: true,
-        },
-    });
+        };
+    }
+
+    const blogs = await prisma.blog.findMany(query);
 
     return blogs;
 }
@@ -34,13 +39,17 @@ async function getUserByUsername(username) {
     return user;
 }
 
-async function getBlog(id) {
-    const blog = await prisma.blog.findFirst({
+async function getBlog(id, { includeUnpublished = false }) {
+    const query = {
         where: {
             id,
-            isPublished: true,
         },
-    });
+    };
+
+    if (!includeUnpublished) {
+        query.where.isPublished = true;
+    }
+    const blog = await prisma.blog.findFirst(query);
 
     return blog;
 }

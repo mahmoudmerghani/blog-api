@@ -1,15 +1,20 @@
 import queries from "../db/queries.js";
 
 async function getAllBlogsMetadata(req, res) {
-    const blogs = await queries.getAllBlogsMetadata();
+    const isAdmin = req.user?.isAdmin === true;
+
+    const blogs = await queries.getAllBlogsMetadata({
+        includeUnpublished: isAdmin,
+    });
 
     res.json(blogs);
 }
 
 async function getBlog(req, res) {
+    const isAdmin = req.user?.isAdmin === true;
     const { blogId } = req.params;
 
-    const blog = await queries.getBlog(blogId);
+    const blog = await queries.getBlog(blogId, { includeUnpublished: isAdmin });
 
     if (!blog) return res.status(404).json({ error: "Not found" });
 

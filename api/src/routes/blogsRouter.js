@@ -1,6 +1,11 @@
 import express from "express";
 import blogsController from "../controllers/blogsController.js";
-import { requireAuth, loadUser } from "../middleware/authMiddleware.js";
+import {
+    requireAuth,
+    loadUser,
+    optionalAuth,
+    loadUserIfExists,
+} from "../middleware/authMiddleware.js";
 import { requireAdmin } from "../middleware/authorizationMiddleware.js";
 import {
     validateBlog,
@@ -13,9 +18,18 @@ const blogsRouter = express.Router();
 
 const isAdmin = [requireAuth, loadUser, requireAdmin];
 
-blogsRouter.get("/", blogsController.getAllBlogsMetadata);
+// GET / and /:blogId will respond differently depending on if the user
+// is admin or anonymous
+blogsRouter.get(
+    "/",
+    optionalAuth,
+    loadUserIfExists,
+    blogsController.getAllBlogsMetadata,
+);
 blogsRouter.get(
     "/:blogId",
+    optionalAuth,
+    loadUserIfExists,
     validateBlogId,
     handleValidationErrors,
     blogsController.getBlog,
