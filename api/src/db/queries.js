@@ -128,6 +128,48 @@ async function deleteBlog(id) {
     return blog;
 }
 
+async function getCommentsForBlog(blogId) {
+    const comments = await prisma.comment.findMany({
+        where: {
+            blogId,
+        },
+    });
+
+    return comments;
+}
+
+async function getComment(id) {
+    const comment = await prisma.comment.findFirst({
+        where: {
+            id,
+        },
+    });
+
+    return comment;
+}
+
+async function deleteComment(id) {
+    const comment = await prisma.comment.delete({
+        where: {
+            id,
+        },
+    });
+
+    return comment;
+}
+
+async function createComment({ username, content, blogId }) {
+    const comment = await prisma.comment.create({
+        data: {
+            username,
+            content,
+            blogId
+        },
+    });
+
+    return comment;
+}
+
 export default {
     getAllBlogs,
     getAllBlogsMetadata,
@@ -139,4 +181,8 @@ export default {
     updateBlog,
     updateBlogPublishedState,
     deleteBlog,
+    getCommentsForBlog,
+    getComment,
+    deleteComment,
+    createComment,
 };

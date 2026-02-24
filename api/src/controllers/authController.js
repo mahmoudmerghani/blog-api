@@ -52,7 +52,7 @@ async function signup(req, res) {
         });
     } catch (e) {
         console.error(e);
-        return res.status(500).json({ errors: ["Server error"] });
+        return res.status(500).json({ error: "Server error" });
     }
 }
 

@@ -57,10 +57,8 @@ export const validateBlogId = [
 ];
 
 export const validateIsPublished = [
-    [
-        body("isPublished")
-            .isBoolean()
-            .withMessage("isPublished must be a boolean")
-            .toBoolean(),
-    ],
+    body("isPublished")
+        .isBoolean()
+        .withMessage("isPublished must be a boolean")
+        .toBoolean(),
 ];

@@ -3,30 +3,47 @@ import queries from "../db/queries.js";
 async function getAllBlogsMetadata(req, res) {
     const isAdmin = req.user?.isAdmin === true;
 
-    const blogs = await queries.getAllBlogsMetadata({
-        includeUnpublished: isAdmin,
-    });
+    try {
+        const blogs = await queries.getAllBlogsMetadata({
+            includeUnpublished: isAdmin,
+        });
 
-    res.json(blogs);
+        res.json(blogs);
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ error: "Server error" });
+    }
 }
 
 async function getBlog(req, res) {
     const isAdmin = req.user?.isAdmin === true;
     const { blogId } = req.params;
 
-    const blog = await queries.getBlog(blogId, { includeUnpublished: isAdmin });
+    try {
+        const blog = await queries.getBlog(blogId, {
+            includeUnpublished: isAdmin,
+        });
 
-    if (!blog) return res.status(404).json({ error: "Not found" });
+        if (!blog) return res.status(404).json({ error: "Not found" });
 
-    res.json(blog);
+        res.json(blog);
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ error: "Server error" });
+    }
 }
 
 async function createBlog(req, res) {
     const { title, content } = req.body;
     const creatorId = req.user.id;
-    const blog = await queries.createBlog({ title, content, creatorId });
 
-    res.status(201).json(blog);
+    try {
+        const blog = await queries.createBlog({ title, content, creatorId });
+        res.status(201).json(blog);
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ error: "Server error" });
+    }
 }
 
 async function updateBlog(req, res) {

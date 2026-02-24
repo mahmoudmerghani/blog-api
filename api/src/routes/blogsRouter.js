@@ -1,5 +1,6 @@
 import express from "express";
 import blogsController from "../controllers/blogsController.js";
+import commentsController from "../controllers/commentsController.js";
 import {
     requireAuth,
     loadUser,
@@ -12,6 +13,7 @@ import {
     validateBlogId,
     validateIsPublished,
 } from "../middleware/blogValidations.js";
+import { validateComment } from "../middleware/commentValidations.js";
 import { handleValidationErrors } from "../middleware/errorHandlingMiddleware.js";
 
 const blogsRouter = express.Router();
@@ -67,6 +69,21 @@ blogsRouter.delete(
     validateBlogId,
     handleValidationErrors,
     blogsController.deleteBlog,
+);
+
+blogsRouter.get(
+    "/:blogId/comments",
+    validateBlogId,
+    handleValidationErrors,
+    commentsController.getCommentsForBlog,
+);
+
+blogsRouter.post(
+    "/:blogId/comments",
+    validateBlogId,
+    validateComment,
+    handleValidationErrors,
+    commentsController.createComment,
 );
 
 export default blogsRouter;
