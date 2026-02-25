@@ -1,9 +1,13 @@
 import express from "express";
+import cors from "cors"
 import blogsRouter from "./routes/blogsRouter.js";
 import authRouter from "./routes/authRouter.js";
 import commentsRouter from "./routes/commentsRouter.js";
 
+
 const app = express();
+
+app.use(cors());
 
 app.use(express.json());
 
