@@ -1,11 +1,28 @@
 import queries from "../db/queries.js";
+import * as cheerio from "cheerio";
+
+function getBlogSummary(html, maxLength = 200) {
+    const $ = cheerio.load(html);
+    const firstParagraph = $("p").first().text().trim();
+    const summary =
+        firstParagraph.length > maxLength
+            ? firstParagraph.slice(0, maxLength) + "..."
+            : firstParagraph;
+
+    return summary;
+}
 
 async function getAllBlogsMetadata(req, res) {
     const isAdmin = req.user?.isAdmin === true;
 
     try {
-        const blogs = await queries.getAllBlogsMetadata({
+        const blogs = await queries.getAllBlogs({
             includeUnpublished: isAdmin,
+        });
+
+        blogs.forEach((blog) => {
+            blog.summary = getBlogSummary(blog.content);
+            delete blog.content; // remove content to keep the response size small
         });
 
         res.json(blogs);

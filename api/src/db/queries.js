@@ -1,7 +1,15 @@
 import { prisma } from "../../lib/prisma.js";
 
-async function getAllBlogs() {
-    const blogs = await prisma.blog.findMany();
+async function getAllBlogs({ includeUnpublished = false }) {
+    const query = {};
+
+    if (!includeUnpublished) {
+        query.where = {
+            isPublished: true,
+        };
+    }
+
+    const blogs = await prisma.blog.findMany(query);
 
     return blogs;
 }
@@ -163,7 +171,7 @@ async function createComment({ username, content, blogId }) {
         data: {
             username,
             content,
-            blogId
+            blogId,
         },
     });
 
