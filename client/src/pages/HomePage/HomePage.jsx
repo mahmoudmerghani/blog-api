@@ -31,6 +31,9 @@ export default function HomePage() {
                     <h2 className="blog-title">
                         {blog.title}
                     </h2>
+                    {blog.summary && (
+                        <p className="blog-summary">{blog.summary}</p>
+                    )}
                     <div className="blog-info">
                         <p className="blog-time">
                             {new Intl.DateTimeFormat(undefined, {

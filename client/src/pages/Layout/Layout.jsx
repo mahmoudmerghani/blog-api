@@ -8,6 +8,7 @@ export default function Layout() {
     const isHome = location.pathname === "/";
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         if (!isHome) setShifted(false);
     }, [isHome]);
 
