@@ -1,0 +1,155 @@
+.about {
+    max-width: 640px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+/* ─── Hero ──────────────────────────────────────────────── */
+.about-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem 0 1rem;
+    gap: 0.75rem;
+}
+
+.about-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7c6af7, #5a45e0);
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.05em;
+    box-shadow: 0 0 0 4px rgba(124, 106, 247, 0.2);
+}
+
+.about-name {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #e2e8f0;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+}
+
+.about-tagline {
+    font-size: 1rem;
+    color: #94a3b8;
+}
+
+/* ─── Sections ──────────────────────────────────────────── */
+.about-section {
+    background-color: #161b27;
+    border: 1px solid #2d3748;
+    border-radius: 10px;
+    padding: 1.5rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.about-section p {
+    color: #94a3b8;
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+.about-section-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #7c6af7;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+}
+
+/* ─── Topics list ───────────────────────────────────────── */
+.about-topics {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.about-topics li {
+    background-color: rgba(124, 106, 247, 0.1);
+    border: 1px solid rgba(124, 106, 247, 0.3);
+    color: #a89dfc;
+    font-size: 0.85rem;
+    padding: 0.3rem 0.85rem;
+    border-radius: 999px;
+}
+
+/* ─── Email ─────────────────────────────────────────────── */
+.about-email {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    align-self: flex-start;
+    background-color: #21262d;
+    color: #e2e8f0;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 0.6rem 1.25rem;
+    border-radius: 8px;
+    border: 1px solid #2d3748;
+    transition: border-color 0.2s, color 0.2s, transform 0.15s;
+}
+
+.about-email svg {
+    width: 16px;
+    height: 16px;
+    color: #7c6af7;
+    flex-shrink: 0;
+}
+
+.about-email:hover {
+    border-color: #7c6af7;
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+/* ─── Social buttons ────────────────────────────────────── */
+.about-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.about-social-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background-color: #21262d;
+    color: #e2e8f0;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.6rem 1.25rem;
+    border-radius: 8px;
+    border: 1px solid #2d3748;
+    transition: background-color 0.2s, border-color 0.2s, transform 0.15s;
+}
+
+.about-social-btn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+.about-social-btn:hover {
+    background-color: #2d333b;
+    border-color: #7c6af7;
+    transform: translateY(-1px);
+}
+
+.about-social-btn--linkedin:hover {
+    border-color: #0a66c2;
+}

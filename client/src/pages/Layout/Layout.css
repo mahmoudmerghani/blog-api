@@ -1,0 +1,123 @@
+/* ─── Reset / base ─────────────────────────────────────── */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #0f1117;
+    color: #e2e8f0;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    line-height: 1.7;
+    min-height: 100vh;
+}
+
+/* ─── Site wrapper (flex column full height) ───────────── */
+.site-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ─── Header ────────────────────────────────────────────── */
+.site-header {
+    background-color: #161b27;
+    border-bottom: 1px solid #2d3748;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.site-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #e2e8f0;
+    text-decoration: none;
+    letter-spacing: 0;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+}
+
+.site-logo:hover {
+    color: #fff;
+}
+
+/* ─── Belt animation ────────────────────────────────────── */
+.logo-window {
+    display: inline-block;
+    width: 7ch;
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+.logo-track {
+    display: inline-block;
+    white-space: nowrap;
+    transform: translateX(0);
+    transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.logo-track--shifted {
+    transform: translateX(-3ch);
+}
+
+.site-logo-op {
+    color: #7c6af7;
+}
+
+/* ─── Nav ───────────────────────────────────────────────── */
+.site-nav {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.nav-link {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.25rem 0;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: #e2e8f0;
+    border-bottom-color: #7c6af7;
+}
+
+/* ─── Main content ──────────────────────────────────────── */
+.site-main {
+    flex: 1;
+    padding: 2.5rem 1.5rem;
+}
+
+.content-container {
+    max-width: 860px;
+    margin: 0 auto;
+}
+
+/* ─── Footer ────────────────────────────────────────────── */
+.site-footer {
+    background-color: #161b27;
+    border-top: 1px solid #2d3748;
+    text-align: center;
+    padding: 1.25rem 1.5rem;
+    font-size: 0.8rem;
+    color: #4a5568;
+}
