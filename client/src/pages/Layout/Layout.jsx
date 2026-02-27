@@ -77,7 +77,7 @@ export default function Layout() {
 
             <footer className="site-footer">
                 <p>
-                    &copy; {new Date().getFullYear()} My Blog. All rights
+                    &copy; {new Date().getFullYear()} Bitwise. All rights
                     reserved.
                 </p>
             </footer>

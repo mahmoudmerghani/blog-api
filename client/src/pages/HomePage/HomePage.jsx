@@ -8,8 +8,8 @@ import "./HomePage.css";
 export default function HomePage() {
     const { data, error, isLoading, request } = useApi();
 
-    async function getBlogsMetadata() {
-        await request({ url: "/api/blogs" });
+    function getBlogsMetadata() {
+        request({ url: "/api/blogs" });
     }
 
     useEffect(() => {
@@ -27,10 +27,12 @@ export default function HomePage() {
     return (
         <div className="blogs">
             {data.map((blog) => (
-                <Link to={`/blogs/${blog.id}`} className="blog-card">
-                    <h2 className="blog-title">
-                        {blog.title}
-                    </h2>
+                <Link
+                    to={`/blogs/${blog.id}`}
+                    className="blog-card"
+                    key={blog.id}
+                >
+                    <h2 className="blog-title">{blog.title}</h2>
                     {blog.summary && (
                         <p className="blog-summary">{blog.summary}</p>
                     )}
