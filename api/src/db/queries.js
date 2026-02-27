@@ -11,6 +11,13 @@ async function getAllBlogs({ includeUnpublished = false }) {
 
     const blogs = await prisma.blog.findMany(query);
 
+    // sort based on "editedAt" if it is not null
+    blogs.sort((a, b) => {
+        const aDate = a.editedAt ?? a.createdAt;
+        const bDate = b.editedAt ?? b.createdAt;
+        return bDate.getTime() - aDate.getTime();
+    });
+
     return blogs;
 }
 
