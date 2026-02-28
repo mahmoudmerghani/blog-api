@@ -15,7 +15,7 @@ export const validateComment = [
         .isString()
         .withMessage("Username must be a string")
         .isLength({ max: 30 })
-        .withMessage("Comment content must be 30 characters or fewer"),
+        .withMessage("Comment username must be 30 characters or fewer"),
     body("content")
         .trim()
         .notEmpty()
