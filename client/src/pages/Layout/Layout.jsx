@@ -50,7 +50,6 @@ export default function Layout() {
                     <nav className="site-nav">
                         <NavLink
                             to="/"
-                            end
                             className={({ isActive }) =>
                                 isActive ? "nav-link active" : "nav-link"
                             }

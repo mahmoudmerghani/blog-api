@@ -5,9 +5,9 @@ const API_URL = import.meta.env.VITE_API_URL;
 export default function useApi() {
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
-    async function request({ url, method = "GET", headers, body }) {
+    async function request({ url, method = "GET", headers, body, onSuccess = () => {} }) {
         setIsLoading(true);
         setError(null);
 
@@ -31,6 +31,7 @@ export default function useApi() {
             }
 
             setData(resBody);
+            onSuccess(resBody);
         } catch (e) {
             console.error(e);
             setError("Network error, Please try again");

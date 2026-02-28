@@ -6,7 +6,7 @@ import Loading from "../../components/Loading/Loading";
 import "./HomePage.css";
 
 export default function HomePage() {
-    const { data, error, isLoading, request } = useApi();
+    const { data: blogs, error, isLoading, request } = useApi();
 
     function getBlogsMetadata() {
         request({ url: "/api/blogs" });
@@ -16,17 +16,17 @@ export default function HomePage() {
         getBlogsMetadata();
     }, []);
 
-    if (isLoading) {
-        return <Loading />;
-    }
-
     if (error) {
         return <Error error={error} onTryAgain={getBlogsMetadata} />;
     }
 
+    if (isLoading || !blogs) {
+        return <Loading />;
+    }
+
     return (
         <div className="blogs">
-            {data.map((blog) => (
+            {blogs?.map((blog) => (
                 <Link
                     to={`/blogs/${blog.id}`}
                     className="blog-card"
