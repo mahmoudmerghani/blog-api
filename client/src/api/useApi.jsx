@@ -8,6 +8,7 @@ export default function useApi() {
     const [isLoading, setIsLoading] = useState(false);
 
     async function request({ url, method = "GET", headers, body, onSuccess = () => {} }) {
+        setData(null);
         setIsLoading(true);
         setError(null);
 
@@ -22,7 +23,7 @@ export default function useApi() {
 
             if (!res.ok) {
                 if (resBody.errors) {
-                    setError(resBody.errors.join("\n"));
+                    setError(resBody.errors.map((e) => e.msg).join("\n"));
                 } else {
                     setError(resBody.error);
                 }
