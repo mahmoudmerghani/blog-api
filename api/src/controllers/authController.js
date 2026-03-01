@@ -29,7 +29,9 @@ async function login(req, res) {
             },
         );
 
-        res.json({ token });
+        const { password: p, ...userWithoutPassword } = user;
+
+        res.json({ token, user: userWithoutPassword });
     } catch (e) {
         console.error(e);
         res.status(500).json({ error: "Server error" });
@@ -46,10 +48,9 @@ async function signup(req, res) {
             password: hashedPassword,
         });
 
-        res.status(201).json({
-            id: user.id,
-            username: user.username,
-        });
+        const { password: p, ...userWithoutPassword } = user;
+
+        res.status(201).json(userWithoutPassword);
     } catch (e) {
         console.error(e);
         return res.status(500).json({ error: "Server error" });
