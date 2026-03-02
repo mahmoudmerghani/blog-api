@@ -2,12 +2,19 @@ import { useState } from "react";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-export default function useApi() {
+export default function useApi({ isLoadingInitialValue = false }) {
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(isLoadingInitialValue);
 
-    async function request({ url, method = "GET", headers, body, onSuccess = () => {} }) {
+    async function request({
+        url,
+        method = "GET",
+        headers,
+        body,
+        onSuccess = () => {},
+        onError = () => {},
+    }) {
         setData(null);
         setIsLoading(true);
         setError(null);
@@ -23,9 +30,15 @@ export default function useApi() {
 
             if (!res.ok) {
                 if (resBody.errors) {
-                    setError(resBody.errors.map((e) => e.msg).join("\n"));
+                    const errorsString = resBody.errors
+                        .map((e) => e.msg)
+                        .join("\n");
+                    
+                    setError(errorsString);
+                    onError(errorsString, res.status);
                 } else {
                     setError(resBody.error);
+                    onError(resBody.error);
                 }
 
                 return;
@@ -36,6 +49,7 @@ export default function useApi() {
         } catch (e) {
             console.error(e);
             setError("Network error, Please try again");
+            onError("Network error, Please try again");
         } finally {
             setIsLoading(false);
         }
