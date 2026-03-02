@@ -22,7 +22,7 @@ export function AuthProvider({ children }) {
         localStorage.removeItem("token");
     }
 
-   async function getUser() {
+    async function getUser() {
         if (!token) {
             setIsLoading(false);
             setError(null);
@@ -34,7 +34,7 @@ export function AuthProvider({ children }) {
         await request({
             url: "/api/auth/me",
             headers: { Authorization: `Bearer ${token}` },
-            onSuccess: (data) => setUser(data.user),
+            onSuccess: (data) => setUser(data),
             onError: (msg, status) => {
                 if (status === 401) {
                     logout();
@@ -53,7 +53,9 @@ export function AuthProvider({ children }) {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ token, user, login, logout, isLoading, error, getUser }}>
+        <AuthContext.Provider
+            value={{ token, user, login, logout, isLoading, error, getUser }}
+        >
             {children}
         </AuthContext.Provider>
     );

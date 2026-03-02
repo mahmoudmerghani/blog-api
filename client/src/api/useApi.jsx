@@ -2,7 +2,7 @@ import { useState } from "react";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-export default function useApi({ isLoadingInitialValue = false }) {
+export default function useApi({ isLoadingInitialValue = false } = {}) {
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(isLoadingInitialValue);
