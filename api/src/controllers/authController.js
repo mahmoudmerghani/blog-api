@@ -57,7 +57,14 @@ async function signup(req, res) {
     }
 }
 
+function getUser(req, res) {
+    const { password, ...userWithoutPassword } = req.user;
+
+    res.json(userWithoutPassword);
+}
+
 export default {
     login,
     signup,
+    getUser,
 };
