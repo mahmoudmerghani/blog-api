@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { Outlet, Link, NavLink, useLocation } from "react-router-dom";
+import { useAuth } from "../../contexts/authContext";
 import "./Layout.css";
 
 export default function Layout() {
     const [shifted, setShifted] = useState(false);
     const location = useLocation();
+    const { user, logout } = useAuth();
     const isHome = location.pathname === "/";
 
     useEffect(() => {
@@ -64,6 +66,21 @@ export default function Layout() {
                         >
                             About
                         </NavLink>
+                        {user && (
+                            <>
+                                <NavLink
+                                    to="/admin/blogs"
+                                    className={({ isActive }) =>
+                                        isActive ? "nav-link active" : "nav-link"
+                                    }
+                                >
+                                    Admin
+                                </NavLink>
+                                <button className="nav-logout" onClick={logout}>
+                                    Logout
+                                </button>
+                            </>
+                        )}
                     </nav>
                 </div>
             </header>

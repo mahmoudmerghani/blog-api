@@ -19,7 +19,6 @@ export default function LoginPage() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ username, password }),
             onSuccess: (data) => {
-                console.log(data);
                 login(data.token, data.user);
                 navigate("/admin", { replace: true });
             },
