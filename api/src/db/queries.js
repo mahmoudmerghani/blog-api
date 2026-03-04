@@ -81,11 +81,12 @@ async function createUser({ fullName, username, password }) {
     return user;
 }
 
-async function createBlog({ title, content, creatorId }) {
+async function createBlog({ title, content, isPublished, creatorId }) {
     const blog = await prisma.blog.create({
         data: {
             title,
             content,
+            isPublished,
             creatorId,
         },
     });
@@ -103,11 +104,12 @@ async function getUserById(id) {
     return user;
 }
 
-async function updateBlog(id, { title, content }) {
+async function updateBlog(id, { title, content, isPublished }) {
     const blog = await prisma.blog.update({
         data: {
             title,
             content,
+            isPublished,
             editedAt: new Date(),
         },
 

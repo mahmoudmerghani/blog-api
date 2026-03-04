@@ -51,11 +51,11 @@ async function getBlog(req, res) {
 }
 
 async function createBlog(req, res) {
-    const { title, content } = req.body;
+    const { title, content, isPublished } = req.body;
     const creatorId = req.user.id;
 
     try {
-        const blog = await queries.createBlog({ title, content, creatorId });
+        const blog = await queries.createBlog({ title, content, isPublished, creatorId });
         res.status(201).json(blog);
     } catch (e) {
         console.error(e);
@@ -64,11 +64,11 @@ async function createBlog(req, res) {
 }
 
 async function updateBlog(req, res) {
-    const { title, content } = req.body;
+    const { title, content, isPublished } = req.body;
     const { blogId } = req.params;
 
     try {
-        const blog = await queries.updateBlog(blogId, { title, content });
+        const blog = await queries.updateBlog(blogId, { title, content, isPublished });
         return res.json(blog);
     } catch (e) {
         return res.status(404).json({ error: "Not found" });

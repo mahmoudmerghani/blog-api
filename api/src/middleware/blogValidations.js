@@ -32,6 +32,13 @@ const sanitizeHtmlOptions = {
     allowedSchemes: ["https", "http", "mailto"],
 };
 
+export const validateIsPublished = [
+    body("isPublished")
+        .isBoolean()
+        .withMessage("isPublished must be a boolean")
+        .toBoolean(),
+];
+
 export const validateBlog = [
     body("title")
         .trim()
@@ -47,6 +54,7 @@ export const validateBlog = [
         .isString()
         .withMessage("Content must be a string")
         .customSanitizer((value) => sanitizeHtml(value, sanitizeHtmlOptions)),
+    ...validateIsPublished,
 ];
 
 export const validateBlogId = [
@@ -54,11 +62,4 @@ export const validateBlogId = [
         .isInt({ gt: 0 })
         .withMessage("blogId must be a positive integer")
         .toInt(),
-];
-
-export const validateIsPublished = [
-    body("isPublished")
-        .isBoolean()
-        .withMessage("isPublished must be a boolean")
-        .toBoolean(),
 ];
