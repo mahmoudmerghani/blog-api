@@ -13,33 +13,36 @@ export function AuthProvider({ children }) {
     function login(token, user) {
         setToken(token);
         setUser(user);
+        setError(null);
+        setIsLoading(false);
         localStorage.setItem("token", token);
     }
 
     function logout() {
         setToken(null);
         setUser(null);
+        setError(null);
+        setIsLoading(false);
         localStorage.removeItem("token");
     }
 
     async function getUser() {
+        setError(null);
+        setUser(null);
+
         if (!token) {
+            setToken(null);
             setIsLoading(false);
-            setError(null);
             return;
         }
 
-        setError(null);
         setIsLoading(true);
         await request({
             url: "/api/auth/me",
             headers: { Authorization: `Bearer ${token}` },
             onSuccess: (data) => setUser(data),
             onError: (msg, status) => {
-                if (status === 401) {
-                    logout();
-                    setError(null);
-                } else {
+                if (status !== 401) {
                     setError(msg);
                 }
             },
@@ -47,6 +50,14 @@ export function AuthProvider({ children }) {
 
         setIsLoading(false);
     }
+
+    useEffect(() => {
+        useApi.addGlobalResponseHandler((res) => {
+            if (res.status === 401) {
+                logout();
+            }
+        });
+    }, []);
 
     useEffect(() => {
         getUser();

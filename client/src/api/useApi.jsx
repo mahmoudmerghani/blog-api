@@ -2,6 +2,8 @@ import { useState } from "react";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
+const globalResponseHandlers = [];
+
 export default function useApi({ isLoadingInitialValue = false } = {}) {
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);
@@ -25,6 +27,10 @@ export default function useApi({ isLoadingInitialValue = false } = {}) {
                 body,
                 headers,
             });
+
+            for (const handler of globalResponseHandlers) {
+                handler(res);
+            }
 
             const resBody = await res.json();
 
@@ -56,4 +62,8 @@ export default function useApi({ isLoadingInitialValue = false } = {}) {
     }
 
     return { data, error, isLoading, request };
+}
+
+useApi.addGlobalResponseHandler = function(handlerFn) {
+    globalResponseHandlers.push(handlerFn);
 }
