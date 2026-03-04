@@ -9,8 +9,9 @@ import "./AdminBlogsPage.css";
 export default function AdminBlogsPage() {
     const { token } = useAuth();
     const { data: blogs, error, isLoading, request } = useApi({ isLoadingInitialValue: true });
-    const { request: toggleRequest } = useApi();
-    const { request: deleteRequest } = useApi();
+    const { request: toggleRequest, isLoading: isToggling } = useApi();
+    const { request: deleteRequest, isLoading: isDeleting } = useApi();
+    const isActioning = isToggling || isDeleting;
     const [actionError, setActionError] = useState(null);
 
     function getBlogs() {
@@ -90,12 +91,14 @@ export default function AdminBlogsPage() {
                                 <button
                                     className="admin-action-btn"
                                     onClick={() => handleTogglePublished(blog)}
+                                    disabled={isActioning}
                                 >
                                     {blog.isPublished ? "Unpublish" : "Publish"}
                                 </button>
                                 <button
                                     className="admin-action-btn admin-action-btn--danger"
                                     onClick={() => handleDelete(blog)}
+                                    disabled={isActioning}
                                 >
                                     Delete
                                 </button>

@@ -151,6 +151,12 @@
     transform: translateY(-1px);
 }
 
+.admin-action-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
 .admin-action-btn--danger {
     color: #fc8181;
     border-color: rgba(252, 129, 129, 0.25);
