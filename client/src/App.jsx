@@ -5,6 +5,7 @@ import AboutPage from "./pages/AboutPage/AboutPage";
 import BlogPage from "./pages/BlogPage/BlogPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import AdminBlogsPage from "./pages/AdminBlogsPage/AdminBlogsPage";
+import AdminBlogEditorPage from "./pages/AdminBlogEditorPage/AdminBlogEditorPage";
 import { AuthProvider } from "./contexts/authContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -24,6 +25,22 @@ export default function App() {
                             element={
                                 <ProtectedRoute>
                                     <AdminBlogsPage />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/admin/blogs/new"
+                            element={
+                                <ProtectedRoute>
+                                    <AdminBlogEditorPage />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/admin/blogs/:blogId/edit"
+                            element={
+                                <ProtectedRoute>
+                                    <AdminBlogEditorPage />
                                 </ProtectedRoute>
                             }
                         />

@@ -5,28 +5,36 @@ import Error from "../Error/Error";
 import "./Comments.css";
 
 // trigger key is used to reload comments when a new comment is made
-export default function Comments({ blogId, triggerKey }) {
-    const { data: comments, error, isLoading, request } = useApi();
+export default function Comments({ blogId, triggerKey, isEditMode = false, onDeleteComment, isDeleting = false }) {
+    const {
+        data: comments,
+        error: fetchError,
+        isLoading: isFetchLoading,
+        request: fetchComments,
+    } = useApi({ isLoadingInitialValue: true });
 
     function getComments() {
-        request({ url: `/api/blogs/${blogId}/comments` });
+        fetchComments({ url: `/api/blogs/${blogId}/comments` });
     }
 
     useEffect(() => {
         getComments();
     }, [blogId, triggerKey]);
 
-    if (error) {
-        return <Error error={error} onTryAgain={getComments} />;
+    if (fetchError) {
+        return <Error error={fetchError} onTryAgain={getComments} />;
     }
 
-    if (isLoading || !comments) {
+    if (isFetchLoading) {
         return <Loading />;
     }
 
     return (
         <section className="comments">
-            <h2 className="comments-heading">Comments ({comments.length})</h2>
+            <h2 className="comments-heading">
+                Comments ({comments.length})
+                {isDeleting && <span className="comments-deleting">Deleting...</span>}
+            </h2>
             <div className="comments-list">
                 {comments.length === 0 ? (
                     <p className="comments-empty">
@@ -44,6 +52,15 @@ export default function Comments({ blogId, triggerKey }) {
                                         dateStyle: "medium",
                                     }).format(new Date(comment.createdAt))}
                                 </span>
+                                {isEditMode && (
+                                    <button
+                                        className="comment-delete-btn"
+                                        onClick={() => onDeleteComment(comment.id)}
+                                        disabled={isDeleting}
+                                    >
+                                        Delete
+                                    </button>
+                                )}
                             </div>
                             <p className="comment-content">{comment.content}</p>
                         </div>
