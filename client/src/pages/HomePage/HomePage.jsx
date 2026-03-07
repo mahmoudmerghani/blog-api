@@ -4,9 +4,12 @@ import { Link } from "react-router-dom";
 import Error from "../../components/Error/Error";
 import Loading from "../../components/Loading/Loading";
 import "./HomePage.css";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 export default function HomePage() {
     const { data: blogs, error, isLoading, request } = useApi();
+
+    useDocumentTitle("Home");
 
     function getBlogsMetadata() {
         request({ url: "/api/blogs" });

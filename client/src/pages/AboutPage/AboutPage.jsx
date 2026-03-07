@@ -1,6 +1,9 @@
 import "./AboutPage.css";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 export default function AboutPage() {
+    useDocumentTitle("About");
+    
     return (
         <div className="about">
             <div className="about-hero">

@@ -7,6 +7,7 @@ import Loading from "../../components/Loading/Loading";
 import Error from "../../components/Error/Error";
 import Comments from "../../components/Comments/Comments";
 import "./AdminBlogEditorPage.css";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 const TINYMCE_CONTENT_STYLE = `
     body {
@@ -113,6 +114,8 @@ export default function AdminBlogEditorPage() {
         isLoading: isDeleteCommentLoading,
         request: deleteComment,
     } = useApi();
+
+    useDocumentTitle("Editor");
 
     function getBlog() {
         fetchBlog({

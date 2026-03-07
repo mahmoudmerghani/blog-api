@@ -5,6 +5,7 @@ import { useAuth } from "../../contexts/authContext";
 import Loading from "../../components/Loading/Loading";
 import Error from "../../components/Error/Error";
 import "./AdminBlogsPage.css";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 export default function AdminBlogsPage() {
     const { token } = useAuth();
@@ -13,6 +14,8 @@ export default function AdminBlogsPage() {
     const { request: deleteRequest, isLoading: isDeleting } = useApi();
     const isActioning = isToggling || isDeleting;
     const [actionError, setActionError] = useState(null);
+
+    useDocumentTitle("Admin Panel");
 
     function getBlogs() {
         request({

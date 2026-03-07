@@ -3,6 +3,7 @@ import useApi from "../../api/useApi";
 import { useAuth } from "../../contexts/authContext";
 import { Navigate, useNavigate } from "react-router-dom";
 import "./LoginPage.css";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 export default function LoginPage() {
     const [username, setUsername] = useState("");
@@ -10,6 +11,8 @@ export default function LoginPage() {
     const { login, user } = useAuth();
     const { error, isLoading, request } = useApi();
     const navigate = useNavigate();
+
+    useDocumentTitle("Login");
 
     function handleSubmit(e) {
         e.preventDefault();

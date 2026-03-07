@@ -6,12 +6,15 @@ import Loading from "../../components/Loading/Loading";
 import Comments from "../../components/Comments/Comments";
 import CommentsForm from "../../components/CommentsForm/CommentsForm";
 import { useEffect, useState } from "react";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 export default function BlogPage() {
     const { data: blog, error, isLoading, request } = useApi();
     const { blogId } = useParams();
     // for reloading comments when a new comment is made
     const [refreshComments, setRefreshComments] = useState(0); 
+
+    useDocumentTitle(blog?.title ? blog.title : "Loading...");
 
     function getBlog() {
         request({ url: `/api/blogs/${blogId}` });
